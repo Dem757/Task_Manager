@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Task board</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png">
+    <!-- Bulma Version 1-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="../css/kanban.css">
+    <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
+</head>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="../images/clip-board.png" alt="Task Manager logo">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                Home
+            </a>
+            <a class="navbar-item">
+                Task board
+            </a>
+            <a class="navbar-item">
+                My tasks
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-primary">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-light">
+                        Log in
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<body>
+<section class="hero is-info">
+    <div class="hero-body">
+        <div class="container">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <div class="control has-icons-left has-icons-right">
+                            <input class="input is-large" type="search"/>
+                            <span class="icon is-medium is-left">
+                            <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="box cta">
+</div>
+<section class="container">
+    <div class="level-item">
+        <div class="columns is-multiline is-centered cards-container" id="sectioncontainer">
+            <div class="column is-narrow">
+                <article class="message is-info">
+                    <div class="message-header">
+                        <p>Open</p>
+                    </div>
+                    <div class="message-body">
+                        <div class="board-item">
+                            <div class="board-item-content"><span>Megcsinánli a Kotlin házit</span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="column is-narrow">
+                <article class="message is-danger">
+                    <div class="message-header">
+                        <p>To Do</p>
+                    </div>
+                    <div class="message-body">
+                        <div class="board-item">
+                            <div class="board-item-content"><span>Megcsinánli a Kotlin házit</span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="column is-narrow">
+                <article class="message is-link">
+                    <div class="message-header">
+                        <p>In Progress</p>
+                    </div>
+                    <div class="message-body">
+                        <div class="board-item">
+                            <div class="board-item-content"><span>Megcsinálni a Kotlin házit</span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="column is-narrow">
+                <article class="message is-info">
+                    <div class="message-header">
+                        <p>Freezed</p>
+                    </div>
+                    <div class="message-body">
+                        <div class="board-item">
+                            <div class="board-item-content"><span>Nem megcsinálni a Kotlin házit</span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="column is-narrow">
+                <article class="message is-success">
+                    <div class="message-header">
+                        <p>Done</p>
+                    </div>
+                    <div class="message-body">
+                        <div class="board-item">
+                            <div class="board-item-content"><span>A Kotlin házi pár hét múlva</span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="column is-narrow">
+                <article class="message is-warning">
+                    <div class="message-header">
+                        <p>Closed</p>
+                    </div>
+                    <div class="message-body">
+                        <div class="board-item">
+                            <div class="board-item-content"><span>A Kotlin házi majd pár hónap múlva</span></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="columns is-mobile is-centered">
+    <div class="column is-half is-narrow"></div>
+</div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <a href="https://bulma.io">
+            <img
+                    src="https://bulma.io/assets/images/made-with-bulma.png"
+                    alt="Made with Bulma"
+                    width="128"
+                    height="24">
+        </a>
+    </div>
+</footer>
+</body>
+</html>
