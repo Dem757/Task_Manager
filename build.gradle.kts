@@ -5,10 +5,12 @@ val logback_version: String by project
 plugins {
     kotlin("jvm") version "1.9.23"
     id("io.ktor.plugin") version "2.3.10"
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 group = "com.task_mgr"
 version = "0.0.1"
+val kmongo_version: String by project
 
 application {
     mainClass.set("com.task_mgr.ApplicationKt")
@@ -32,4 +34,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-serialization:$ktor_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.litote.kmongo:kmongo:$kmongo_version")
 }

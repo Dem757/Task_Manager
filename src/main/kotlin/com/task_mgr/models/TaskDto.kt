@@ -1,11 +1,10 @@
 package com.task_mgr.models
 
-import org.bson.codecs.pojo.annotations.BsonId
-import org.litote.kmongo.Id
+import kotlinx.serialization.Serializable
 
-data class Task(
-    @BsonId
-    val id: Id<Task>? = null,
+@Serializable
+data class TaskDto(
+    val id: String? = null,
     val name: String,
     val description: String,
     val label: String,
