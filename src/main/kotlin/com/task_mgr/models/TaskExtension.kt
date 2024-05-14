@@ -7,7 +7,8 @@ fun Task.toDto() : TaskDto =
         description = this.description,
         label = this.label,
         owner = this.owner,
-        status = this.status
+        status = this.status,
+        dueDate = this.dueDate
     )
 
 fun TaskDto.toTask() : Task =
@@ -16,5 +17,6 @@ fun TaskDto.toTask() : Task =
         description = this.description,
         label = this.label,
         owner = this.owner,
-        status = this.status
+        status = this.status,
+        dueDate = this.dueDate
     )

@@ -1,6 +1,7 @@
 package com.task_mgr.models
 
 import kotlinx.serialization.Serializable
+import java.util.Date
 
 @Serializable
 data class TaskDto(
@@ -9,5 +10,6 @@ data class TaskDto(
     val description: String,
     val label: String,
     val owner: String,
-    val status: String
+    val status: String,
+    val dueDate: String
 )

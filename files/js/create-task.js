@@ -32,6 +32,10 @@ submitButton.addEventListener("click", function (event) {
   for (const [key, value] of formData.entries()) {
     jsonObject[key] = value;
   }
+
+  var statusSelect = document.getElementById("status");
+  jsonObject["status"] = statusSelect.options[statusSelect.selectedIndex].value;
+
   var json = JSON.stringify(jsonObject);
 
   // Use the fetch API to send the form data to the server

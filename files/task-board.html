@@ -52,18 +52,12 @@
 <section class="hero is-info">
     <div class="hero-body">
         <div class="container">
-            <div class="card">
-                <div class="card-content">
-                    <div class="content">
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input is-large" type="search"/>
-                            <span class="icon is-medium is-left">
-                            <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h1 class="title">
+                Task Board
+            </h1>
+            <h2 class="subtitle">
+                Manage your tasks
+            </h2>
         </div>
     </div>
 </section>
@@ -84,7 +78,18 @@
                         <label class="label" for="owner">Owner</label>
                         <input class="input" type="text" name="owner" id="owner">
                         <label class="label" for="status">Status</label>
-                        <input class="input" type="text" name="status" id="status">
+                        <div class="select">
+                            <select id="status">
+                                <option value="open">Open</option>
+                                <option value="to-do">To Do</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="frozen">Frozen</option>
+                                <option value="done">Done</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+                        <label class="label" for="dueDate">Due Date</label>
+                        <input class="input" type="date" name="dueDate" id="dueDate">
                     </form>
                     <div class="columns is-mobile is-centered">
                         <button class="button is-primary" id="submit-task">Submit</button>

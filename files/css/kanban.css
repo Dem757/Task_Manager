@@ -79,3 +79,10 @@ footer {
 #submit-task {
     margin-top: 40px; /* Adjust this value as needed */
 }
+
+.message-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

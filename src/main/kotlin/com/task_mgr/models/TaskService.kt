@@ -35,7 +35,8 @@ class TaskService {
                         description = request.description,
                         label = request.label,
                         owner = request.owner,
-                        status = request.status
+                        status = request.status,
+                        dueDate = request.dueDate
                     )
                 )
                 updateResult.modifiedCount == 1L
