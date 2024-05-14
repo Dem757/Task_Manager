@@ -6,7 +6,7 @@ import com.task_mgr.models.User
 import java.util.*
 
 object JwtConfig {
-    private const val secret = "f615661d438ec4b8341c8b4af72f180121fecf0424ec059903ae7f353bc5260b"
+    private const val secret = ""
     private const val issuer = "com.task_mgr"
     private const val validityInMs = 36_000_00 * 10 // 10 hours
     private val algorithm = Algorithm.HMAC512(secret)
