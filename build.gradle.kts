@@ -37,4 +37,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization:$ktor_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("org.litote.kmongo:kmongo:$kmongo_version")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
+
 }

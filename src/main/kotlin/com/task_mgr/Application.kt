@@ -17,6 +17,6 @@ fun Application.module() {
         json()
     }
 
-    //configureSecurity()
+    configureSecurity()
     configureRouting()
 }

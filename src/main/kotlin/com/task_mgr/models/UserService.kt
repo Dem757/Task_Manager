@@ -17,4 +17,8 @@ class UserService {
     fun login(username: String, password: String): User? {
         return userCollection.findOne(User::username eq username, User::password eq password)
     }
+
+    fun findByName(username: String): Any {
+        return userCollection.find(User::username eq username).toList()
+    }
 }

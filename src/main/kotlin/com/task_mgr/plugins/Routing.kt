@@ -1,5 +1,7 @@
 package com.task_mgr.plugins
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import com.task_mgr.models.*
 import io.ktor.http.*
 import io.ktor.http.ContentDisposition.Companion.File
@@ -9,12 +11,19 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.io.File
+import java.security.MessageDigest
+import java.util.*
 
 fun Application.configureRouting() {
 
     val service = TaskService()
 
     val userService = UserService()
+
+    val secret = environment.config.property("jwt.secret").getString()
+    val issuer = environment.config.property("jwt.issuer").getString()
+    val audience = environment.config.property("jwt.audience").getString()
+    val myRealm = environment.config.property("jwt.realm").getString()
 
     routing {
         staticFiles("/", File("files")) {
@@ -86,7 +95,7 @@ fun Application.configureRouting() {
         route("/api/user") {
             post("/register") {
                 val request = call.receive<UserDto>()
-                val user = request.toUser()
+                val user = request.toUser().copy(password = hashPassword(request.password))
 
                 userService.register(user)
                     ?.let { userId ->
@@ -98,10 +107,18 @@ fun Application.configureRouting() {
                 val user = call.receive<User>()
                 userService.login(user.username, user.password)
                     ?.let { loggedInUser ->
-                        call.response.headers.append("User-Id-Header", loggedInUser.id.toString())
-                        call.respond(HttpStatusCode.OK)
+                        val token = JwtConfig.generateToken(loggedInUser)
+                        call.respond(HttpStatusCode.OK, mapOf("token" to token))
                     } ?: call.respond(HttpStatusCode.Unauthorized, ErrorResponse("Invalid username or password"))
             }
         }
     }
+}
+
+// Some basic hashing (not too secure but better than plain text)
+fun hashPassword(password: String): String {
+    val bytes = password.toByteArray()
+    val md = MessageDigest.getInstance("SHA-256")
+    val digest = md.digest(bytes)
+    return digest.fold("") { str, it -> str + "%02x".format(it) }
 }
