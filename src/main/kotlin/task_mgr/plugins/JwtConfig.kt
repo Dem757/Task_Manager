@@ -1,8 +1,8 @@
-package com.task_mgr.plugins
+package task_mgr.plugins
 
 import com.auth0.jwt.*
 import com.auth0.jwt.algorithms.*
-import com.task_mgr.models.User
+import task_mgr.models.User
 import java.util.*
 
 object JwtConfig {

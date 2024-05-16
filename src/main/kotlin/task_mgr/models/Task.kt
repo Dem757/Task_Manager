@@ -1,4 +1,4 @@
-package com.task_mgr.models
+package task_mgr.models
 
 import org.bson.codecs.pojo.annotations.BsonId
 import org.litote.kmongo.Id

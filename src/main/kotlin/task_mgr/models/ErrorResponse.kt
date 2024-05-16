@@ -1,4 +1,4 @@
-package com.task_mgr.models
+package task_mgr.models
 
 import kotlinx.serialization.Serializable
 

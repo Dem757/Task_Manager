@@ -1,4 +1,4 @@
-package com.task_mgr.models
+package task_mgr.models
 
 fun Task.toDto() : TaskDto =
     TaskDto(

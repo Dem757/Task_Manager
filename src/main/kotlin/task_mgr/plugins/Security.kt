@@ -1,6 +1,6 @@
-package com.task_mgr.plugins
+package task_mgr.plugins
 
-import com.task_mgr.models.UserService
+import task_mgr.models.UserService
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*

@@ -1,8 +1,8 @@
-package com.task_mgr.plugins
+package task_mgr.plugins
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.task_mgr.models.*
+import task_mgr.models.*
 import io.ktor.http.*
 import io.ktor.http.ContentDisposition.Companion.File
 import io.ktor.server.application.*
@@ -10,6 +10,7 @@ import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import task_mgr.models.*
 import java.io.File
 import java.security.MessageDigest
 import java.util.*
@@ -20,10 +21,10 @@ fun Application.configureRouting() {
 
     val userService = UserService()
 
-    val secret = environment.config.property("jwt.secret").getString()
+/*    val secret = environment.config.property("jwt.secret").getString()
     val issuer = environment.config.property("jwt.issuer").getString()
     val audience = environment.config.property("jwt.audience").getString()
-    val myRealm = environment.config.property("jwt.realm").getString()
+    val myRealm = environment.config.property("jwt.realm").getString()*/
 
     routing {
         staticFiles("/", File("files")) {
