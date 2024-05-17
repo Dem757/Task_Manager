@@ -6,13 +6,17 @@ import task_mgr.models.User
 import java.util.*
 
 object JwtConfig {
-    private const val secret = "59ba4fd4b5aab9f7fffecc9a45edb0475ef5e0e643f1ef05d3aef0cba0d1082d"
-    private const val issuer = "com.task_mgr"
-    private const val audience = "http://127.0.0.1:8080/task-board"
+    private lateinit var secret: String
+    private lateinit var issuer: String
+    private lateinit var audience: String
     private const val validityInMs = 36_000_00 * 10 // 10 hours
-    private val algorithm = Algorithm.HMAC512(secret)
 
-    val verifier: JWTVerifier = JWT.require(algorithm).withIssuer(issuer).build()
+    fun init(secret: String, issuer: String, audience: String) {
+        this.secret = secret
+        this.issuer = issuer
+        this.audience = audience
+    }
+
 
     fun generateToken(user: User): String = JWT.create()
         .withAudience(audience)
@@ -21,7 +25,7 @@ object JwtConfig {
         .withClaim("id", user.id.toString())
         .withClaim("name", user.username)
         .withExpiresAt(getExpiration())
-        .sign(algorithm)
+        .sign(Algorithm.HMAC512(secret))
 
     private fun getExpiration() = Date(System.currentTimeMillis() + validityInMs)
 }

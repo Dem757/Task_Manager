@@ -12,10 +12,10 @@ import io.ktor.server.sessions.*
 
 fun Application.configureSecurity() {
 
-    val secret = "59ba4fd4b5aab9f7fffecc9a45edb0475ef5e0e643f1ef05d3aef0cba0d1082d"
-    val issuer = "com.task_mgr"
-    val audience = "http://127.0.0.1:8080/task-board"
-    val myRealm = "Access to 'task-board'"
+    val secret = environment.config.property("jwt.secret").getString()
+    val issuer = environment.config.property("jwt.issuer").getString()
+    val audience = environment.config.property("jwt.audience").getString()
+    val myRealm = environment.config.property("jwt.realm").getString()
 
     install(Authentication) {
         jwt("auth-jwt") {

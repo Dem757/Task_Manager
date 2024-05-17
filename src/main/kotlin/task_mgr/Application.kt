@@ -8,10 +8,8 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import task_mgr.plugins.configureRouting
 
-fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
-}
+
+fun main(args: Array<String>) : Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
     install(ContentNegotiation) {
