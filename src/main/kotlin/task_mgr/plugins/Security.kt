@@ -1,5 +1,7 @@
 package task_mgr.plugins
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import task_mgr.models.UserService
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -9,29 +11,24 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 
 fun Application.configureSecurity() {
-    val userService = UserService()
+
+    val secret = "59ba4fd4b5aab9f7fffecc9a45edb0475ef5e0e643f1ef05d3aef0cba0d1082d"
+    val issuer = "com.task_mgr"
+    val audience = "http://127.0.0.1:8080/task-board"
+    val myRealm = "Access to 'task-board'"
+
     install(Authentication) {
-        jwt {
-            realm = "com.task_mgr"
-            verifier(JwtConfig.verifier)
-            validate {
-                val name = it.payload.getClaim("name").asString()
-                val user = userService.findByName(name)
-                if (user != null) UserIdPrincipal(name) else null
+        jwt("auth-jwt") {
+            validate { credential ->
+                if (credential.payload.audience.contains(audience)) JWTPrincipal(credential.payload) else null
             }
-        }
-    }
-    data class MySession(val count: Int = 0)
-    install(Sessions) {
-        cookie<MySession>("MY_SESSION") {
-            cookie.extensions["SameSite"] = "lax"
-        }
-    }
-    routing {
-        get("/session/increment") {
-            val session = call.sessions.get<MySession>() ?: MySession()
-            call.sessions.set(session.copy(count = session.count + 1))
-            call.respondText("Counter is ${session.count}. Refresh to increment.")
+            realm = myRealm
+            verifier(
+                JWT
+                .require(Algorithm.HMAC512(secret))
+                .withAudience(audience)
+                .withIssuer(issuer)
+                .build())
         }
     }
 }

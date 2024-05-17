@@ -1,5 +1,19 @@
 // Fetch tasks from the API
-fetch("/api/task")
+
+window.onload = function () {
+    var token = localStorage.getItem("token");
+    if (token == null) {
+        window.location.href = "/login.html";
+    }
+}
+
+fetch("/api/task", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+})
   .then((response) => response.json())
   .then((tasks) => {
     // Iterate over the tasks
@@ -39,7 +53,12 @@ fetch("/api/task")
 
       // Add an event listener to the task
       taskContentDiv.addEventListener("click", function () {
-        fetch(`/api/task/${task.id}`)
+        fetch(`/api/task/${task.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+          })
           .then((response) => response.json())
           .then((task) => {
             // Fill the form with the task details
