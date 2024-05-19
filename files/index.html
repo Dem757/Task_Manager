@@ -9,44 +9,13 @@
     >
     <link rel="icon" type="image/png" href="clip-board.png">
 </head>
-<nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="/static">
-            <img src="clip-board.png" alt="Task Manager logo">
-        </a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="index.html">
-                Home
-            </a>
-            <a class="navbar-item" href="task-board.html">
-                Task board
-            </a>
-            <a class="navbar-item">
-                My tasks
-            </a>
-        </div>
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button is-primary" href="register.html">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light" href="login.html">
-                        Log in
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<div id="navbar">
+    <script>
+    fetch('navbar.html')
+    .then(response => response.text())
+    .then(data => document.getElementById('navbar').innerHTML = data);
+</script>
+</div>
 <body>
 <section class="hero is-info is-fullheight">
     <div class="hero-body">
@@ -63,15 +32,11 @@
     </div>
 </section>
 </body>
-<footer class="footer">
-    <div class="content has-text-centered">
-        <a href="https://bulma.io">
-            <img
-                    src="https://bulma.io/assets/images/made-with-bulma.png"
-                    alt="Made with Bulma"
-                    width="128"
-                    height="24">
-        </a>
-    </div>
-</footer>
+<div id="footer">
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
+</div>
 </html>
