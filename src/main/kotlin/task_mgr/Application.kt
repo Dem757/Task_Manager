@@ -1,6 +1,7 @@
 package task_mgr
 
 import task_mgr.plugins.*
+import task_mgr.dao.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -15,7 +16,7 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
-
+    DatabaseSingleton.init()
     configureSecurity()
     configureRouting()
 }

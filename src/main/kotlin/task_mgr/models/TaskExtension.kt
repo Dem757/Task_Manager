@@ -2,7 +2,7 @@ package task_mgr.models
 
 fun Task.toDto() : TaskDto =
     TaskDto(
-        id = this.id.toString(),
+        id = this.id,
         name = this.name,
         description = this.description,
         label = this.label,
@@ -13,6 +13,7 @@ fun Task.toDto() : TaskDto =
 
 fun TaskDto.toTask() : Task =
     Task(
+        id = this.id!!,
         name = this.name,
         description = this.description,
         label = this.label,

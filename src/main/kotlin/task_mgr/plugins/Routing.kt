@@ -18,7 +18,7 @@ import java.util.*
 
 fun Application.configureRouting() {
 
-    val service = TaskService()
+    //val service = TaskService()
 
     val userService = UserService()
 
@@ -60,11 +60,7 @@ fun Application.configureRouting() {
                     val request = call.receive<TaskDto>()
                     val task = request.toTask()
 
-                    service.create(task)
-                        ?.let { userId ->
-                            call.response.headers.append("User-Id-Header", userId.toString())
-                            call.respond(HttpStatusCode.Created)
-                        } ?: call.respond(HttpStatusCode.BadRequest, ErrorResponse.BAD_REQUEST_RESPONSE)
+
                 }
                 get {
                     val taskList = service.findAll().map(Task::toDto)

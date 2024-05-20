@@ -5,7 +5,7 @@ import java.util.Date
 
 @Serializable
 data class TaskDto(
-    val id: String? = null,
+    val id: Int? = null,
     val name: String,
     val description: String,
     val label: String,
