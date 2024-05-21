@@ -22,7 +22,7 @@ fun Application.configureRouting() {
 
     //val service = TaskService()
 
-    val userService = UserService()
+    //val userService = UserService()
 
     val secret = environment.config.property("jwt.secret").getString()
     val issuer = environment.config.property("jwt.issuer").getString()
@@ -38,9 +38,11 @@ fun Application.configureRouting() {
         route("/api/user") {
             post("/register") {
                 val request = call.receive<UserDto>()
-                val user = request.toUser().copy(password = hashPassword(request.password))
+                //val user = request.toUser().copy(password = hashPassword(request.password))
+                val username = request.username
+                val password = hashPassword(request.password)
 
-                userService.register(user)
+                dao.addUser(username, password)
                     ?.let { userId ->
                         call.response.headers.append("User-Id-Header", userId.toString())
                         call.respond(HttpStatusCode.Created)
@@ -48,12 +50,17 @@ fun Application.configureRouting() {
             }
             post("/login") {
                 val request = call.receive<UserDto>()
-                val user = request.toUser().copy(password = hashPassword(request.password))
-                userService.login(user.username, user.password)
-                    ?.let { loggedInUser ->
-                        val token = JwtConfig.generateToken(loggedInUser)
+
+                val username = request.username
+                val password = hashPassword(request.password)
+
+                val user = dao.loginUsers(username, password)
+                    if (user != null) {
+                        val token = JwtConfig.generateToken(user)
                         call.respond(HttpStatusCode.OK, mapOf("token" to token))
-                    } ?: call.respond(HttpStatusCode.Unauthorized, ErrorResponse("Invalid username or password"))
+                    } else {
+                        call.respond(HttpStatusCode.Unauthorized, ErrorResponse("Invalid username or password"))
+                    }
             }
         }
         authenticate("auth-jwt") {

@@ -42,53 +42,58 @@ class DAOFacadeImpl : DAOFacade {
     override suspend fun updateTask(task: Task): Boolean = dbQuery {
         Tasks.update({ Tasks.id eq task.id }) {
             it[name] = task.name
-            it[Tasks.description] = task.description
-            it[Tasks.label] = task.label
+            it[description] = task.description
+            it[label] = task.label
             it[owner] = task.owner
-            it[Tasks.status] = task.status
-            it[Tasks.dueDate] = task.dueDate
+            it[status] = task.status
+            it[dueDate] = task.dueDate
         } > 0
     }
 
-    override suspend fun deleteTask(id: Int): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun deleteTask(id: Int): Boolean = dbQuery {
+        Tasks.deleteWhere { Tasks.id eq id } > 0
     }
 
-//    private fun resultRowUser(row: ResultRow) = User(
-//        id = row[Users.id],
-//        username = row[Users.username],
-//        password = row[Users.password]
-//    )
-//
-//    override suspend fun addUser(id: Int, username: String, password: String): User? = dbQuery {
-//        val insertStatement = Users.insert {
-//            it[Users.id] = id
-//            it[Users.username] = username
-//            it[Users.password] = password
-//        }
-//        insertStatement.resultedValues?.singleOrNull()?.let(::resultRowUser)
-//    }
-//
-//    override suspend fun getUser(id: Int): User? = dbQuery {
-//        Users.select { Users.id eq id }
-//            .map(::resultRowUser)
-//            .singleOrNull()
-//    }
-//
-//    override suspend fun getAllUsers(): List<User> = dbQuery {
-//        Users.selectAll().map(::resultRowUser)
-//    }
-//
-//    override suspend fun updateUser(user: User): Boolean = dbQuery {
-//        Users.update({ Users.id eq user.id }) {
-//            it[Users.username] = user.username
-//            it[Users.password] = user.password
-//        } > 0
-//    }
-//
-//    override suspend fun deleteUser(id: Int): Boolean = dbQuery {
-//        Users.deleteWhere { Users.id eq id } > 0
-//    }
+    private fun resultRowUser(row: ResultRow) = User(
+        id = row[Users.id],
+        username = row[Users.username],
+        password = row[Users.password]
+    )
+
+    override suspend fun addUser(username: String, password: String): User? = dbQuery {
+        val insertStatement = Users.insert {
+            it[Users.username] = username
+            it[Users.password] = password
+        }
+        insertStatement.resultedValues?.singleOrNull()?.let(::resultRowUser)
+    }
+
+    override suspend fun getUser(id: Int): User? = dbQuery {
+        Users.select { Users.id eq id }
+            .map(::resultRowUser)
+            .singleOrNull()
+    }
+
+    override suspend fun getAllUsers(): List<User> = dbQuery {
+        Users.selectAll().map(::resultRowUser)
+    }
+
+    override suspend fun updateUser(user: User): Boolean = dbQuery {
+        Users.update({ Users.id eq user.id }) {
+            it[username] = user.username
+            it[password] = user.password
+        } > 0
+    }
+
+    override suspend fun deleteUser(id: Int): Boolean = dbQuery {
+        Users.deleteWhere { Users.id eq id } > 0
+    }
+
+    override suspend fun loginUsers(username: String, password: String): User? = dbQuery {
+        Users.select { Users.username eq username and (Users.password eq password) }
+            .map(::resultRowUser)
+            .singleOrNull()
+    }
 
 }
 
