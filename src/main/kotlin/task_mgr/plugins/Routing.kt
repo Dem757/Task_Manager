@@ -3,6 +3,7 @@ package task_mgr.plugins
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import task_mgr.models.*
+import task_mgr.dao.dao
 import io.ktor.http.*
 import io.ktor.http.ContentDisposition.Companion.File
 import io.ktor.server.application.*
@@ -11,10 +12,11 @@ import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import task_mgr.models.*
+import io.ktor.server.util.*
 import java.io.File
 import java.security.MessageDigest
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun Application.configureRouting() {
 
@@ -58,29 +60,38 @@ fun Application.configureRouting() {
             route("/api/task") {
                 post {
                     val request = call.receive<TaskDto>()
-                    val task = request.toTask()
+                    val name = request.name
+                    val description = request.description
+                    val label = request.label
+                    val owner = request.owner
+                    val status = request.status
+                    val dueDate = request.dueDate
 
+
+                    dao.addTask(name, description, label, owner, status, dueDate)
 
                 }
                 get {
-                    val taskList = service.findAll().map(Task::toDto)
+                    val taskList = dao.getAllTasks().map(Task::toDto)
+
                     call.respond(taskList)
                 }
                 get("/{id}") {
                     val id = call.parameters["id"]
 
                     id?.let { it1 ->
-                        service.findById(it1)
+                        dao.getTask(it1.toInt())
                             ?.let { task -> call.respond(task.toDto()) }
                     }
                         ?: call.respond(HttpStatusCode.NotFound, ErrorResponse.NOT_FOUND_RESPONSE)
+
                 }
                 put("/{id}") {
                     val id = call.parameters["id"].toString()
                     val request = call.receive<TaskDto>()
-                    val task = request.toTask()
 
-                    val updatedSuccessfully = service.update(id, task)
+
+                    val updatedSuccessfully = dao.updateTask(request.toTask(id.toInt()))
 
                     if (updatedSuccessfully) {
                         call.respond(HttpStatusCode.OK)
@@ -91,7 +102,7 @@ fun Application.configureRouting() {
                 delete("/{id}") {
                     val id = call.parameters["id"].toString()
 
-                    val deletedSuccessfully = service.delete(id)
+                    val deletedSuccessfully = dao.deleteTask(id.toInt())
 
                     if (deletedSuccessfully) {
                         call.respond(HttpStatusCode.OK)

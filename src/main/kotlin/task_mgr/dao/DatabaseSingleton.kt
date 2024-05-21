@@ -8,12 +8,12 @@ import org.jetbrains.exposed.sql.transactions.experimental.*
 
 object DatabaseSingleton {
     fun init() {
-        val driverClassName = "task_mgr.h2.Driver"
+        val driverClassName = "org.h2.Driver"
         val jdbcURL = "jdbc:h2:file:./build/db"
         val database = Database.connect(jdbcURL, driverClassName)
         transaction(database) {
             SchemaUtils.create(Tasks)
-            SchemaUtils.create(Users)
+            //SchemaUtils.create(Users)
         }
     }
 

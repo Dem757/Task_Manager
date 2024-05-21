@@ -17,7 +17,7 @@ data class Task(
     val dueDate: String
 )*/
 
-data class Task(val id: Int, val name: String, val description: String, val label: String, val owner: String, val status: String, val dueDate: String)
+data class Task(val id: Int, var name: String, val description: String, val label: String, val owner: String, val status: String, val dueDate: String)
 
 object Tasks : Table() {
     val id = integer("id").autoIncrement()

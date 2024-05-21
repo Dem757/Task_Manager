@@ -11,9 +11,9 @@ fun Task.toDto() : TaskDto =
         dueDate = this.dueDate
     )
 
-fun TaskDto.toTask() : Task =
+fun TaskDto.toTask(id: Int) : Task =
     Task(
-        id = this.id!!,
+        id = id,
         name = this.name,
         description = this.description,
         label = this.label,
