@@ -7,6 +7,8 @@ var btn = document.getElementById("create-task-btn");
 // When the user clicks the button, open the modal
 btn.onclick = function () {
   modal.style.display = "block";
+  deleteButton.style.display = "none";
+  // Show the delete button when editing an existing task
 };
 
 // Get the form and the submit button
@@ -16,6 +18,7 @@ var submitButton = document.getElementById("submit-task");
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    form.reset(); // Reset the form
   }
 };
 
@@ -23,6 +26,9 @@ window.onclick = function (event) {
 submitButton.addEventListener("click", function (event) {
   // Prevent the default form submission
   event.preventDefault();
+
+  // Use the fetch API to send the form data to the server
+  var taskId = document.getElementById("name").getAttribute("data-task-id");
 
   // Create a new FormData object from the form
   var formData = new FormData(form);
@@ -38,8 +44,6 @@ submitButton.addEventListener("click", function (event) {
 
   var json = JSON.stringify(jsonObject);
 
-  // Use the fetch API to send the form data to the server
-  var taskId = document.getElementById("name").getAttribute("data-task-id");
   var method = taskId ? "PUT" : "POST";
   var url = taskId ? `/api/task/${taskId}` : "/api/task";
 
@@ -47,7 +51,7 @@ submitButton.addEventListener("click", function (event) {
     method: method,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
     body: json,
   })
@@ -65,3 +69,30 @@ submitButton.addEventListener("click", function (event) {
       console.error("Error:", error);
     });
 });
+
+// Fetch users from the server
+fetch("/api/users", {
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  },
+})
+  .then((response) => response.json())
+  .then((users) => {
+    // Get the owner select element
+    const ownerSelect = document.getElementById("owner");
+
+    // Clear any existing options
+    while (ownerSelect.firstChild) {
+      ownerSelect.removeChild(ownerSelect.firstChild);
+    }
+
+    // Add an option for each user
+    users.forEach((user) => {
+      const option = document.createElement("option");
+      option.value = user.username;
+      option.textContent = user.username;
+      ownerSelect.appendChild(option);
+    });
+  });
+
+// Add an event listener to the delete button

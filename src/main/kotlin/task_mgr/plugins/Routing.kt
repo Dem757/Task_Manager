@@ -1,28 +1,19 @@
 package task_mgr.plugins
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
+
 import task_mgr.models.*
 import task_mgr.dao.dao
 import io.ktor.http.*
-import io.ktor.http.ContentDisposition.Companion.File
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.util.*
 import java.io.File
 import java.security.MessageDigest
-import java.util.*
-import kotlin.collections.ArrayList
 
 fun Application.configureRouting() {
-
-    //val service = TaskService()
-
-    //val userService = UserService()
 
     val secret = environment.config.property("jwt.secret").getString()
     val issuer = environment.config.property("jwt.issuer").getString()
@@ -38,7 +29,6 @@ fun Application.configureRouting() {
         route("/api/user") {
             post("/register") {
                 val request = call.receive<UserDto>()
-                //val user = request.toUser().copy(password = hashPassword(request.password))
                 val username = request.username
                 val password = hashPassword(request.password)
 
@@ -116,6 +106,13 @@ fun Application.configureRouting() {
                     } else {
                         call.respond(HttpStatusCode.NotFound, ErrorResponse.NOT_FOUND_RESPONSE)
                     }
+                }
+            }
+            route("/api/users") {
+                get {
+                    val userList = dao.getAllUsers().map(User::toDto)
+
+                    call.respond(userList)
                 }
             }
         }

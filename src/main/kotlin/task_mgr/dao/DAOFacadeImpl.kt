@@ -95,6 +95,11 @@ class DAOFacadeImpl : DAOFacade {
             .singleOrNull()
     }
 
+    override suspend fun getTaskByOwner(owner: String): List<Task> = dbQuery {
+        Tasks.select { Tasks.owner eq owner }
+            .map(::resultRowTask)
+    }
+
 }
 
 val dao: DAOFacade = DAOFacadeImpl().apply { runBlocking { DatabaseSingleton.init() } }

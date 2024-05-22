@@ -42,7 +42,9 @@
                         <label class="label" for="label">Label</label>
                         <input class="input" type="text" name="label" id="label">
                         <label class="label" for="owner">Owner</label>
-                        <input class="input" type="text" name="owner" id="owner">
+                        <select class="input" name="owner" id="owner">
+                            <!-- Options will be populated by the script -->
+                        </select>
                         <label class="label" for="status">Status</label>
                         <div class="select">
                             <select id="status">
@@ -58,6 +60,7 @@
                         <input class="input" type="date" name="dueDate" id="dueDate">
                     </form>
                     <div class="columns is-mobile is-centered">
+                        <button class="button is-danger" id="delete-task" style="display: none;">Delete</button>
                         <button class="button is-primary" id="submit-task">Submit</button>
                     </div>
                 </div>

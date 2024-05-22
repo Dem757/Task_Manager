@@ -1,18 +1,19 @@
 // Fetch tasks from the API
+var deleteButton = document.getElementById("delete-task");
 
 window.onload = function () {
-    var token = localStorage.getItem("token");
-    if (token == null) {
-        window.location.href = "/login.html";
-    }
-}
+  var token = localStorage.getItem("token");
+  if (token == null) {
+    window.location.href = "/login.html";
+  }
+};
 
 fetch("/api/task", {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token")
-    }
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  },
 })
   .then((response) => response.json())
   .then((tasks) => {
@@ -54,11 +55,11 @@ fetch("/api/task", {
       // Add an event listener to the task
       taskContentDiv.addEventListener("click", function () {
         fetch(`/api/task/${task.id}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-          })
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
           .then((response) => response.json())
           .then((task) => {
             // Fill the form with the task details
@@ -74,8 +75,36 @@ fetch("/api/task", {
 
             // Show the form
             modal.style.display = "block";
+            deleteButton.style.display = "block";
           });
       });
     });
   })
   .catch((error) => console.error("Error:", error));
+
+deleteButton.addEventListener("click", function (event) {
+  // Prevent the default action
+  event.preventDefault();
+
+  // Get the task id
+  var taskId = document.getElementById("name").getAttribute("data-task-id");
+
+  // Send a DELETE request to the server
+  fetch(`/api/task/${taskId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        // Reload the page after successful deletion
+        window.location.reload();
+      } else {
+        console.error("Error:", response.statusText);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});

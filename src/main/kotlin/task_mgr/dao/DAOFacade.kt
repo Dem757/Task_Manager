@@ -14,4 +14,5 @@ interface DAOFacade {
     suspend fun updateUser(user: User): Boolean
     suspend fun deleteUser(id: Int): Boolean
     suspend fun loginUsers(username: String, password: String): User?
+    suspend fun getTaskByOwner(owner: String): List<Task>
 }
