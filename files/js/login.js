@@ -7,11 +7,13 @@ document
     var password = document.getElementById("password").value;
 
     var requestBody = {
-        username: username,
-        password: password,
+      username: username,
+      password: password,
     };
 
     console.log(requestBody);
+
+    var notification = document.querySelector(".notification");
 
     fetch("/api/user/login", {
       method: "POST",
@@ -27,10 +29,15 @@ document
           window.location.href = "/";
           // Redirect the user to the home page or dashboard
         } else {
-          // Show an error message
+          notification.textContent = "Login failed";
+          notification.classList.add("error");
+          notification.hidden = false;
         }
       })
       .catch((error) => {
+        notification.textContent = "Login failed";
+        notification.classList.add("error");
+        notification.hidden = false;
         console.error("Error:", error);
       });
   });
